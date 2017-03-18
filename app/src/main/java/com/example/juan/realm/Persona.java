@@ -70,10 +70,11 @@ public class Persona extends RealmObject {
     }
     public void setDataNaixament(String dataNaixament) throws ParseException {
 
-        /*SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        Date result =  df.parse(dataNaixament);*/
+        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy",Locale.ENGLISH);
+        Date result =  df.parse(dataNaixament);
+        df.format(result);
 
-        this.naixement = dataNaixament;
+        this.naixement = df.format(result);
     }
 
     /*
