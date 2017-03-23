@@ -39,6 +39,7 @@ public class PersonaAdapter extends RealmBaseAdapter<Persona> implements ListAda
         TextView txNom;
         TextView txNaix;
         TextView txSexe;
+        TextView txEdat;
 
 
     }
@@ -55,6 +56,8 @@ public class PersonaAdapter extends RealmBaseAdapter<Persona> implements ListAda
             viewHolder.txNom = (TextView) convertView.findViewById(R.id.txNom);
             viewHolder.txNaix = (TextView) convertView.findViewById(R.id.txNaixement);
             viewHolder.txSexe = (TextView) convertView.findViewById(R.id.txSexe);
+            viewHolder.txEdat = (TextView) convertView.findViewById(R.id.txEdat);
+
 
 
 
@@ -69,8 +72,13 @@ public class PersonaAdapter extends RealmBaseAdapter<Persona> implements ListAda
         viewHolder.txNom.setText(item.getNom());
         viewHolder.txNaix.setText(item.getDataNaixament());
         viewHolder.txSexe.setText(item.getGenere());
-
-
+        try {
+            viewHolder.txEdat.setText(String.valueOf(item.getAge()));
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        }
 
 
         return convertView;
