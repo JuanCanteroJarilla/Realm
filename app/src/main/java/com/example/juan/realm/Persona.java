@@ -11,6 +11,9 @@ import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
 
+import static android.R.attr.y;
+import static java.lang.Integer.parseInt;
+
 /**
  * Created by Juan on 11/03/2017.
  */
@@ -84,28 +87,26 @@ public class Persona extends RealmObject {
     *	@return int Edat de la persona a partir de la data de naixement
     */
 
-    public void setAge(int year,int month,int day){
-        final Calendar birthDay = Calendar.getInstance();
-        birthDay.set(year, month, day);
-        final Calendar current = Calendar.getInstance();
-        if (current.getTimeInMillis() < birthDay.getTimeInMillis())
-            throw new IllegalArgumentException("age < 0");
-        int age = current.get(Calendar.YEAR) - birthDay.get(Calendar.YEAR);
-        if (birthDay.get(Calendar.MONTH) > current.get(Calendar.MONTH) ||
-                (birthDay.get(Calendar.MONTH) == current.get(Calendar.MONTH) &&
-                        birthDay.get(Calendar.DATE) > current.get(Calendar.DATE)))
-            age--;
-        this.edat= age;
+    public void setAge(String _naixement){
+        Calendar cal = Calendar.getInstance();
+        Calendar cal2 = Calendar.getInstance();
+
+       int year =  Integer.parseInt(_naixement.substring(0,4));
+        int month = Integer.parseInt(_naixement.substring(5,6));
+        int day = Integer.parseInt(_naixement.substring(8,9));
+
+         int y1 = cal.get(Calendar.YEAR);
+        int anio = (y1-1) - year;
+        System.out.println("AÑO REAL: "+year);
+        System.out.println("AÑO ACTUAL: "+y1);
+
+        this.edat = anio;
+
+
     }
-    /*public int getAge() throws IllegalAccessException, InstantiationException {
-        Date today;
-        today = Date.class.newInstance();
-        if ((naixement != null) && (today != null)) {
-            return today.getYear()-naixement.getYear();
-        } else {
-            return 0;
-        }
-    }*/
+    public int getAge() throws IllegalAccessException, InstantiationException {
+        return edat;
+    }
 
 
     public String getId() {

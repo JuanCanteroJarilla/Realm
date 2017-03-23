@@ -188,12 +188,18 @@ public class MainActivity extends AppCompatActivity
                                         //persona.setAge(year,month,day);
                                     try {
                                         persona.setDataNaixament(llistadates.get(0));
+                                        persona.setAge(llistadates.get(0));
+                                        Log.d(TAG,"EDAD:"+persona.getAge());
                                     } catch (ParseException e) {
+                                        e.printStackTrace();
+                                    } catch (InstantiationException e) {
+                                        e.printStackTrace();
+                                    } catch (IllegalAccessException e) {
                                         e.printStackTrace();
                                     }
 
 
-                                    if(home.isChecked()){
+                                   if(home.isChecked()){
                                         persona.setGenere("Home");
                                     }
                                     if(dona.isChecked()){
