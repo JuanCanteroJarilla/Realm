@@ -34,10 +34,9 @@ import java.util.Locale;
 import java.util.UUID;
 
 import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
-
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     Button add, view, update, delete;
     EditText  name;
@@ -46,9 +45,6 @@ public class MainActivity extends AppCompatActivity
     EditText nomOutput,naixOutput;
     RadioButton home,dona;
     ArrayList<String> llistadates = new ArrayList<>();
-    private static final String TAG = "TAG";
-    StringBuilder sb = new StringBuilder();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +76,20 @@ public class MainActivity extends AppCompatActivity
 
         add = (Button) findViewById(R.id.add);
         text = (TextView) findViewById(R.id.text);
+
+        RealmConfiguration config = new RealmConfiguration.Builder()
+                .name("personas.realm")
+                .schemaVersion(0)
+                .migration(new MigrationPersona())
+                .build();
+        Realm.setDefaultConfiguration(config);
+        /*RealmConfiguration config = new RealmConfiguration.Builder()
+                .name("personas.realm")
+                .schemaVersion(0)
+                .deleteRealmIfMigrationNeeded()
+                .build();
+        Realm.setDefaultConfiguration(config);*/
+
         realm = Realm.getDefaultInstance();
     }
 
@@ -120,21 +130,16 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.Afegir) {
-            //Log.d(TAG,"CLICK!!!!");
+
             LayoutInflater li = LayoutInflater.from(MainActivity.this);
             final View dialogView = li.inflate(R.layout.custom_dialog, null);
-
             final EditText nom = (EditText) dialogView
                     .findViewById(R.id.etAfegir);
-            /*final EditText dNaixement = (EditText) dialogView
-                    .findViewById(R.id.etNaixement);*/
 
             final RadioButton home = (RadioButton)dialogView.findViewById(R.id.rbHome);
             final RadioButton dona = (RadioButton)dialogView.findViewById(R.id.rbDona);
             final ImageButton cal = (ImageButton)dialogView.findViewById(R.id.imCal);
             final Calendar myCalendar = Calendar.getInstance();
-
-
 
             //SE CREA UN ALERTDIALOG PARA EL INPUT DEL USUARIO
             AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
@@ -153,10 +158,8 @@ public class MainActivity extends AppCompatActivity
                     year = arg1;
                     month = arg2;
                     day = arg3;
-
                     month +=1;
-
-                   llistadates.add(year+"-"+month+"-"+day);
+                    llistadates.add(year+"-"+month+"-"+day);
                 }
 
             };
@@ -164,8 +167,6 @@ public class MainActivity extends AppCompatActivity
 
                 @Override
                 public void onClick(View view) {
-                    Log.d(TAG,"CLICK!!!!");
-                   // Log.d(TAG,"FECHA2:"+myDateListener.toString());
                     DatePickerDialog dp = new DatePickerDialog(MainActivity.this, myDateListener,startYear,startMonth,startDay);
                     dp.show();
 
@@ -183,18 +184,13 @@ public class MainActivity extends AppCompatActivity
                                     realm.beginTransaction();
                                     //COMO "NOM" ES LA PK, SE LE PASA COMO 2º ARGUMENTO EN CREATEOBJECT
                                     final Persona persona = realm.createObject(Persona.class, UUID.randomUUID().toString());
-                                    //persona.setId(id);
                                         persona.setNom(nom.getText().toString());
-                                        //persona.setAge(year,month,day);
+
                                     try {
                                         persona.setDataNaixament(llistadates.get(0));
                                         persona.setAge(llistadates.get(0));
-                                        Log.d(TAG,"EDAD:"+persona.getAge());
+
                                     } catch (ParseException e) {
-                                        e.printStackTrace();
-                                    } catch (InstantiationException e) {
-                                        e.printStackTrace();
-                                    } catch (IllegalAccessException e) {
                                         e.printStackTrace();
                                     }
 

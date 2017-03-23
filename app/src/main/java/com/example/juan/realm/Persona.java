@@ -24,68 +24,36 @@ public class Persona extends RealmObject {
 
     @PrimaryKey
     private String id;
-
+    @Required
     public String nom;
+    @Required
+    private String genere;
+    @Required
+    private String naixement;
 
-    public String getGenere() {
-        return genere;
+    private int edat;
+
+    public Persona(){
+
     }
 
     public void setGenere(String genere) {
         this.genere = genere;
     }
 
-    private String genere;
-
-    //private Genere genere;
-
-    @Required
-    private String naixement;
-
-    private int edat;
-
-
-    /*public boolean test(Persona p) throws InstantiationException, IllegalAccessException {
-
-        return p.genere == Persona.Genere.HOME && p.getAge() >=18 && p.getAge() <=25;
-    }*/
-
-    public Persona(){
-
+    public String getGenere() {
+        return genere;
     }
 
-    /*public Persona(String nom, Genere genere, String dataNaixament) {
-        this.nom = nom;
-        this.genere = genere;
-        this.dataNaixament = dataNaixament;
-    }*/
-    public String getNom() {
-        return nom;
-    }
+    public String getNom() {return nom;}
+
     public void setNom(String nom) {
         this.nom = nom;
     }
-    /*public Genere getGenere() {
-        return genere;
-    }*/
-    /*public void setGenere(Genere genere) {
-        this.genere = genere;
-    }*/
-    public String getDataNaixament() {
-        return naixement;
-    }
-    public void setDataNaixament(String dataNaixament) throws ParseException {
 
-        /*SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy",Locale.ENGLISH);
-        Date result =  df.parse(dataNaixament);
-        df.format(result);*/
+    public String getDataNaixament() {return naixement;}
 
-        this.naixement = dataNaixament;
-    }
-
-    /*
-    *	@return int Edat de la persona a partir de la data de naixement
-    */
+    public void setDataNaixament(String dataNaixament) throws ParseException {this.naixement = dataNaixament;}
 
     public void setAge(String _naixement){
         Calendar cal = Calendar.getInstance();
@@ -104,10 +72,7 @@ public class Persona extends RealmObject {
 
 
     }
-    public int getAge() throws IllegalAccessException, InstantiationException {
-        return edat;
-    }
-
+    public int getAge() throws IllegalAccessException, InstantiationException {return edat;}
 
     public String getId() {
         return id;
