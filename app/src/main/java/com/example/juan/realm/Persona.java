@@ -3,6 +3,7 @@ package com.example.juan.realm;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -38,6 +39,8 @@ public class Persona extends RealmObject {
     @Required
     private String naixement;
 
+    private int edat;
+
 
     /*public boolean test(Persona p) throws InstantiationException, IllegalAccessException {
 
@@ -70,16 +73,30 @@ public class Persona extends RealmObject {
     }
     public void setDataNaixament(String dataNaixament) throws ParseException {
 
-        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy",Locale.ENGLISH);
+        /*SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy",Locale.ENGLISH);
         Date result =  df.parse(dataNaixament);
-        df.format(result);
+        df.format(result);*/
 
-        this.naixement = df.format(result);
+        this.naixement = dataNaixament;
     }
 
     /*
     *	@return int Edat de la persona a partir de la data de naixement
     */
+
+    public void setAge(int year,int month,int day){
+        final Calendar birthDay = Calendar.getInstance();
+        birthDay.set(year, month, day);
+        final Calendar current = Calendar.getInstance();
+        if (current.getTimeInMillis() < birthDay.getTimeInMillis())
+            throw new IllegalArgumentException("age < 0");
+        int age = current.get(Calendar.YEAR) - birthDay.get(Calendar.YEAR);
+        if (birthDay.get(Calendar.MONTH) > current.get(Calendar.MONTH) ||
+                (birthDay.get(Calendar.MONTH) == current.get(Calendar.MONTH) &&
+                        birthDay.get(Calendar.DATE) > current.get(Calendar.DATE)))
+            age--;
+        this.edat= age;
+    }
     /*public int getAge() throws IllegalAccessException, InstantiationException {
         Date today;
         today = Date.class.newInstance();
@@ -90,20 +107,6 @@ public class Persona extends RealmObject {
         }
     }*/
 
-    /*@Override
-    public String toString() {
-        return nom + '\t' + genere.toString() + '\t' + getAge();
-    }
-
-    public void printPersona(List<Persona> llista, CheckPerson test){
-        for(Persona pers : llista){
-            if(test.test(pers)){
-                System.out.println(pers.toString());
-            }
-        }
-
-
-    }*/
 
     public String getId() {
         return id;

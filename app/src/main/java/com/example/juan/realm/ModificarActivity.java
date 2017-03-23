@@ -51,7 +51,7 @@ public class ModificarActivity extends AppCompatActivity {
         final View dialogView = li.inflate(R.layout.custom_dialog,null);
 
         final EditText nom = (EditText) dialogView.findViewById(R.id.etAfegir);
-        final EditText dNaixement = (EditText) dialogView.findViewById(R.id.etNaixement);
+        //final EditText dNaixement = (EditText) dialogView.findViewById(R.id.etNaixement);
         final RadioButton home = (RadioButton)dialogView.findViewById(R.id.rbHome);
         final RadioButton dona = (RadioButton)dialogView.findViewById(R.id.rbDona);
 
@@ -77,11 +77,11 @@ public class ModificarActivity extends AppCompatActivity {
                                             @Override
                                             public void execute(Realm realm) {
                                                 p.setNom(nom.getText().toString());
-                                                try {
+                                                /*try {
                                                     p.setDataNaixament(dNaixement.getText().toString());
                                                 } catch (ParseException e) {
                                                     e.printStackTrace();
-                                                }
+                                                }*/
                                                 if(home.isChecked()){
                                                     p.setGenere("Home");
                                                 }

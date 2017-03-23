@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/ll_dialog"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -15,13 +16,13 @@
         <requestFocus />
     </EditText>
 
-    <EditText
-        android:id="@+id/etNaixement"
-        android:layout_width="match_parent"
+
+    <ImageButton
+        android:id="@+id/imCal"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Data de naixement (aaaa/MM/dd)"
-        android:inputType="textPersonName" />
+        app:srcCompat="@android:drawable/ic_menu_month"
+        android:calendarViewShown="false"/>
 
     <RadioButton
         android:id="@+id/rbHome"
